@@ -1,27 +1,28 @@
 from flask import jsonify
-from models import Widget
+from models import Widget, db
 
 # GET all widgets
 def get_all_widgets():
     all_widgets = Widget.query.all()
-    results = []
-
-    for widget in all_widgets:
-        results.append(widget.as_dict)
+    results = [widget.as_dict() for widget in all_widgets]
+    # for widget in all_widgets:
+    #     results.append(widget.as_dict)
     return jsonify(results)
 
 # GET one widget
-def get_one_widget():
+def get_one_widget(id):
     one_widget = Widget.query.get(id)
-    if widget:
-        return jsonify(widget.as_dict)
+    if one_widget:
+        return jsonify(one_widget.as_dict())
     else:
         return jsonify(message='not a valid widget, please try again')
+
 # POST 
-def add_widget():
-    new_widget = Widget(name=name, wodget=wodget, quantity=quantity or None)
+def add_widget(name, wodget, quantity):
+    new_widget = Widget(name=name, wodget=wodget, quantity=quantity)
     db.session.add(new_widget)
-    session.commit(new_widget.as_dict())
+    db.session.commit()
+    return jsonify(new_widget.as_dict())
 
 # PUT
 def update_widget(id, name, wodget, quantity):
@@ -40,7 +41,7 @@ def destory_widget(id):
     widget = Widget.query.get(id)
     if widget:
         db.session.delete(widget)
-        session.commit()
-        return redirect('/widgets')
+        db.session.commit()
+        return f'deleted'
     else:
         return jsonify(message='Please indicate a valid widget to delete')

@@ -13,17 +13,17 @@ class Widget(db.Model):
     __tablename__ = 'widgets'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, nullable=False)
+    name = db.Column(db.String, nullable=False)
     wodget = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
 
     def __repr__(self):
-        return f'🧙‍♀️ Widget(id={self.id}, name="{self.name}", wodget={self.wodget}, quantity={self.quantity}'
+        return f'🧙‍♀️ Widget(id={self.id}, name="{self.name}", wodget={self.wodget}, quantity={self.quantity})'
 
     def as_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "wodget": self.wodget,
-            "qantity": self.quantity
+            "quantity": self.quantity
         }

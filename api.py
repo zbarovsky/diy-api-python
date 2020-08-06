@@ -14,9 +14,9 @@ def home():
 def widget_index():
     if request.method == 'GET':
         return get_all_widgets()
-    if request.method == 'POST': 
-        print(request.form)
-        return add_widget()
+    elif request.method == 'POST': 
+        # print(request.form)
+        return add_widget(name=request.form['name'], wodget=request.form['wodget'], quantity=request.form['quantity'])
     else:
         return jsonify(message='Widgets coming soon')
 
@@ -25,13 +25,13 @@ def widget_index():
 # GET one widget
 # PUT update one widget
 # DELETE delete one widget
-@app.route('/widgets/<id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/widgets/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def one_widget(id):
-    if response.method == 'GET':
+    if request.method == 'GET':
         return get_one_widget(id)
-    elif response.method == 'PUT':
-        return update_widget(id)
-    elif response.method == 'DELETE':
+    elif request.method == 'PUT':
+        return update_widget(id, name=request.form['name'], wodget=request.form['wodget'], quantity=request.form['quantity'])
+    elif request.method == 'DELETE':
         return destory_widget(id)
     else:
         return jsonify(message='error, please choose a valid input id')
